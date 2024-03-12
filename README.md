@@ -19,3 +19,11 @@ be done in a single .sql file if needed
 3. HTML form should allow us to at least add / edit news articles. List of authors can be hardcoded
 into database.
 ```
+
+# Requirements
+- Docker (i was using 25.0.2 version)
+
+# How to start
+1. Clone repository
+2. Go to the main directory of downloaded repository ``` cd path/to/repository ```
+3. ``` docker compose up -d --build ```
