@@ -35,10 +35,12 @@ services:
         timeout: 2s
         retries: 100
       volumes:
-        - backend_mysql:/var/lib/mysql
+        - mysql:/var/lib/mysql
+      ports:        # only for development
+        - 3306:3306 #
       networks:
         - symfony
 volumes:
-  backend_mysql:
+  mysql:
 networks:
   symfony:
