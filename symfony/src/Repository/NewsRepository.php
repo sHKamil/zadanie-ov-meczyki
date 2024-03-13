@@ -21,7 +21,33 @@ class NewsRepository extends ServiceEntityRepository
         parent::__construct($registry, News::class);
     }
 
-    public function findByIdWithAuthors($id): array
+    public function findAllWithAuthors(): array
+    {
+        $news = $this->findAll();
+        $newsWithAuthors = [];
+
+        foreach ($news as $article) {
+            $newsCollection = $article->getAuthors();
+            $authorsArray = [];
+            foreach ($newsCollection as $news) {
+                $authorsArray[] = [
+                    'id' => $news->getId(),
+                    'name' => $news->getName(),
+                ];
+            }
+            $newsWithAuthors[] = [
+                'id' => $article->getId(),
+                'name' => $article->getTitle(),
+                'content' => $article->getContent(),
+                'create_date' => $article->getCreateDate(),
+                'authors' => $authorsArray
+            ];
+        }
+
+        return $newsWithAuthors;
+    }
+
+    public function findByIdWithAuthors(int $id): array
     {
         $news = $this->findOneBy(['id' => $id]);
         $authorsCollection = $news->getAuthors();
@@ -37,34 +63,9 @@ class NewsRepository extends ServiceEntityRepository
         return [
             'id' => $news->getId(),
             'title' => $news->getTitle(),
-            'content' => $news->getTitle(),
+            'content' => $news->getContent(),
             'create_date' => $news->getCreateDate(),
             'authors' => $authorsArray
         ];
     }
-
-    //    /**
-    //     * @return News[] Returns an array of News objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('n')
-    //            ->andWhere('n.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('n.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?News
-    //    {
-    //        return $this->createQueryBuilder('n')
-    //            ->andWhere('n.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }
