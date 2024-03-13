@@ -8,7 +8,7 @@ import CardTitle from './ui/card/CardTitle.vue';
 
 
 const authors = useRankAuthors(3);
-
+let position = 1;
 
 
 
@@ -25,7 +25,7 @@ const authors = useRankAuthors(3);
           <hr>
             <div class="w-full flex justify-between">
               <div class="w-fit">
-                {{ author.name }}
+                {{position++}}. {{ author.name }}
               </div>
               <div class="w-fit">
                 {{ author.news_count }}
