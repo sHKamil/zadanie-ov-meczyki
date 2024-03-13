@@ -6,10 +6,8 @@ use App\Repository\AuthorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Validator\Constraints as AppAssert;
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
-#[AppAssert\UniqueAuthorInArticle()]
 class Author
 {
     #[ORM\Id]

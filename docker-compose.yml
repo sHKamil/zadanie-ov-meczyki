@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
     web:
       image: nginx:latest
       ports:
@@ -12,6 +13,7 @@ services:
         - symfony
       depends_on:
         - app
+
     app:
       build:
         context: .
@@ -23,6 +25,7 @@ services:
       depends_on:
         mysql:
           condition: service_healthy
+
     mysql:
       image: mysql
       environment:
@@ -40,6 +43,21 @@ services:
         - 3306:3306 #
       networks:
         - symfony
+
+    frontend:
+      build:
+        context: .
+        dockerfile: Dockerfile-frontend
+      command: npm run dev
+      volumes:
+        - ./vue/:/usr/src/app
+      ports:
+        - "8080:8080"
+      networks:
+        - symfony
+      depends_on:
+        - app
+
 volumes:
   mysql:
 networks:
