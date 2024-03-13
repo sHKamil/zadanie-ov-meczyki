@@ -35,21 +35,29 @@ class NewsController extends AbstractController
     public function articleAdd(EntityManagerInterface $entityManager, Request $request): JsonResponse
     {
         $news = new News;
+        $authorRepository = $entityManager->getRepository(Author::class);
         $formValidator = new FormValidator;
 
         $data = json_decode($request->getContent(), true);
         $errors['title'] = $formValidator->nameField($data['title']) ? : $formValidator->nameField($data['title']);
         $errors['content'] = $formValidator->contentField($data['content']);
-        if(count($errors['title']) <= 0 && count($errors['content']) <= 0) {
+        $errors['authors'] = $formValidator->authorsField($data['authors']);
+        if(count($errors['title']) <= 0 && count($errors['content']) <= 0  && count($errors['authors']) <= 0) {
             $news->setTitle($data['title']);
             $news->setContent($data['content']);
             $news->setCreateDate(new DateTimeImmutable());
+            foreach ($data['authors'] as $id) {
+                $author = $authorRepository->find($id);
+                if($author){
+                    $news->addAuthor($author);
+                }
+            }
 
             return $this->send($news, $entityManager);
         } else {
             return new JsonResponse([
                 'status' => '400',
-                'message' => count($errors)
+                'message' => $errors
             ], 400);
         }
     }
