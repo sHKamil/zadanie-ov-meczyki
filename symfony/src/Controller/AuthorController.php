@@ -32,7 +32,7 @@ class AuthorController extends AbstractController
         return $this->json($author);
     }
 
-    #[Route('/author/{id}', name: 'app_author_edit', methods:['POST'])]
+    #[Route('/author/edit/{id}', name: 'app_author_edit', methods:['POST'])]
     public function articleEdit(EntityManagerInterface $entityManager, Request $request, int $id): JsonResponse
     {
         $formValidator = new FormValidator;

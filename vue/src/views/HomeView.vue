@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AuthorFormComponent from '@/components/AuthorFormComponent.vue';
 import NewsFormComponent from '@/components/NewsFormComponent.vue';
 import NewsListComponent from '@/components/NewsListComponent.vue';
 import RankComponent from '@/components/RankComponent.vue';
@@ -20,7 +21,9 @@ const rankRefresh = () => {
       <div>
         <NewsFormComponent @refresh="rankRefresh"/>
       </div>
-
+      <div>
+        <AuthorFormComponent />
+      </div>
     </div>
     <div class="w-9/12 mx-auto mt-10">
       <NewsListComponent />

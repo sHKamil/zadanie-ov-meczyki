@@ -65,7 +65,7 @@ watch(value, setPlaceholder);
     <Card class="w-fit min-w-96 rounded-2xl p-2">
         <CardHeader>
         <CardTitle>Add new article</CardTitle>
-        <CardDescription>Top 3 writers in this week</CardDescription>
+        <CardDescription>Create new beautiful article</CardDescription>
         </CardHeader>
         <CardContent class="flex flex-col gap-4">
           <form class="w-full space-y-6" @submit.prevent="onSubmit">
