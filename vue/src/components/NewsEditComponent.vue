@@ -37,7 +37,7 @@ const { handleSubmit, setValues, values  } = useForm({
 })
 
 const onSubmit =  handleSubmit(async (values) => {
-  await useEditNews(values);
+  await useEditNews(values, props.article.id);
   emit('refreshList')
   toast({
     title: 'Article changed:',
@@ -78,8 +78,8 @@ const onSubmit =  handleSubmit(async (values) => {
           </FormItem>
         </FormField>
       <DrawerFooter>
-        <Button type="submit" class="w-fit mx-auto">Submit</Button>
         <DrawerClose>
+          <Button type="submit" class="w-fit mx-auto">Submit</Button>
           <Button variant="outline">
             Cancel
           </Button>

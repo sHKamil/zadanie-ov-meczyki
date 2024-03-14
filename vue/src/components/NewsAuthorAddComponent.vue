@@ -54,7 +54,6 @@ function setPlaceholder() {
 }
 
 const formSchema = toTypedSchema(z.object({
-  article_id: z.number(),
   author: z.number({
     required_error: 'Please select a author.',
   })
@@ -64,11 +63,11 @@ const { handleSubmit, setValues, values  } = useForm({
   validationSchema: formSchema,
 })
 
-const onSubmit =  handleSubmit(async (values) => {
-  await useAddAuthorToNews(values.article_id, values.author);
+const onSubmit =  handleSubmit(async (values) => { 
+  await useAddAuthorToNews(props.article.id, values.author);
   emit('refreshList')
   toast({
-    title: 'Author added:'
+    title: 'Author added'
   })
 })
 
@@ -142,8 +141,8 @@ watch(value, setPlaceholder);
               </FormItem>
             </FormField>
       <DrawerFooter>
-        <Button type="submit" class="w-fit mx-auto">Submit</Button>
         <DrawerClose>
+          <Button type="submit" class="w-fit mx-auto">Submit</Button>
           <Button variant="outline">
             Cancel
           </Button>

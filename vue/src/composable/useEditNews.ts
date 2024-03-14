@@ -6,9 +6,9 @@ type NewEditValuesType = {
     content: string,
 }
 
-export async function useEditNews (values: NewEditValuesType) {
+export async function useEditNews (values: NewEditValuesType, id: number) {
     const url = GetBackendUrl();
-    const status = await axios.post(url + '/news/edit', {
+    const status = await axios.post(url + '/news/edit/' + id, {
         title: values.title,
         content: values.content,
       }).then(response=> {
