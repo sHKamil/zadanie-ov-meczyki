@@ -6,8 +6,10 @@ import RankComponent from '@/components/RankComponent.vue';
 import { ref } from 'vue';
 
 const rank = ref(null);
+const news = ref(null);
 const rankRefresh = () => {
   rank.value?.fetchData();
+  news.value?.fetchData();
 };
 
 </script>
@@ -26,7 +28,7 @@ const rankRefresh = () => {
       </div>
     </div>
     <div class="w-9/12 mx-auto mt-10">
-      <NewsListComponent />
+      <NewsListComponent ref="news"/>
     </div>
   </main>
 </template>

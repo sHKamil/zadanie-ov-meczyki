@@ -102,10 +102,10 @@ watch(value, setPlaceholder);
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent class="w-4/12 mx-auto p-0">
+                    <PopoverContent class="mx-auto p-0">
                       <Command>
                         <CommandList>
-                          <CommandGroup class="max-h-32 overflow-y-scroll">
+                          <CommandGroup class="max-h-32 min-w-fit overflow-y-scroll">
                             <CommandItem
                               v-for="author in availableAuthors"
                               :key="author.id"
