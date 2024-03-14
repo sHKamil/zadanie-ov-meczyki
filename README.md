@@ -23,16 +23,25 @@ into database.
 # Requirements
 - Docker (i was using 25.0.2 version)
 
+#### Possibly required:
+ - composer
+ - npm
+
 # How to start
 1. Clone repository
 2. Go to the main directory of downloaded repository ``` cd path/to/repository ```
 3. ``` docker compose up -d --build ```
 
+If vendor and var folders were created in ```./symfony/``` folder and folder node_modules also has been created but in ```./vue/``` then everything should work from now. If not it will be necessary to use command ```composer install``` in ```./symfony/``` folder, and ```npm install``` in ```./vue/``` folder.
+
 ### Backend by default will be available on port 8070, so: http://localhost:8070/
 
 ### Frontend by default will be available on port 8080, so: http://localhost:8080/
 
+# Online Front -> [meczyki.shka.pro](https://meczyki.shka.pro/)
+# Online Back -> [back-meczyki.shka.pro](https://back-meczyki.shka.pro/)
 # About
+
 ### Backend - Symfony
 
 #### Entities: 
@@ -59,6 +68,13 @@ into database.
 
 ### Frontend - Vue.js
 
-# Symfony bundles/packages used
+# Symfony bundles/packages
 - MakerBundle
 - OrmPack
+- cors-bundle
+
+# Vue packages/dependencies
+- axios
+- shadcn
+- tailwind
+- zod

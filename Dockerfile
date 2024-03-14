@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
-RUN useradd -ms /bin/bash appuser
-USER appuser
+# RUN useradd -ms /bin/bash appuser
+# USER appuser
 
 COPY symfony/ /var/www/html
 

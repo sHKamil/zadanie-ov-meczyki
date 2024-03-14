@@ -39,8 +39,8 @@ services:
         retries: 100
       volumes:
         - mysql:/var/lib/mysql
-      ports:        # only for development
-        - 3306:3306 #
+      # ports:        # only for development
+      #   - 3306:3306 #
       networks:
         - symfony
 
