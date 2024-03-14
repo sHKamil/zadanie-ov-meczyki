@@ -158,6 +158,42 @@ class NewsController extends AbstractController
         }
     }
 
+    #[Route('/news/delete', name: 'app_news_delete', methods:['POST'])]
+    public function articleRemove(EntityManagerInterface $entityManager, Request $request): JsonResponse
+    {
+        $formValidator = new FormValidator;
+
+        $repository = $entityManager->getRepository(News::class);
+        $data = json_decode($request->getContent(), true);
+
+        $errors['id'] = $formValidator->idField((int) $data['id']);
+
+        if(count($errors['id']) <= 0) {
+            $article = $repository->find((int) $data['id']);
+            $entityManager->remove($article);
+            $entityManager->beginTransaction();
+            try {
+                $entityManager->flush();
+                $entityManager->commit();
+            } catch (\Exception $exception) {
+                $entityManager->rollback();
+                return new JsonResponse([
+                    'status' => 'Faliure',
+                    'message' => $exception->getMessage()
+                ]);
+            }
+            return new JsonResponse([
+                'status' => '201',
+                'message' => 'Success'
+            ], 201);
+        } else {
+            return new JsonResponse([
+                'status' => '400',
+                'message' => $errors,
+            ], 400);
+        }
+    }
+
     private function send(News $news, EntityManagerInterface $entityManager) : JsonResponse
     {
         $entityManager->beginTransaction();

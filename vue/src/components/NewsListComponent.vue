@@ -9,6 +9,7 @@ import NewsEditComponent from './NewsEditComponent.vue';
 import NewsAuthorAddComponent from './NewsAuthorAddComponent.vue';
 import { useRemoveAuthorFromNews } from '@/composable/useRemoveAuthorFromNews';
 import { Skeleton } from './ui/skeleton';
+import { useRemoveNews } from '@/composable/useRemoveNews';
 
 const defaultValue = '0';
 
@@ -17,6 +18,11 @@ const url = GetBackendUrl();
 
 async function removeAuthorFromNews (article_id: number, author_id: number) {
   await useRemoveAuthorFromNews(article_id, author_id);
+  fetchData();
+}
+
+async function removeNews (article_id: number) {
+  await useRemoveNews(article_id);
   fetchData();
 }
 
@@ -44,9 +50,10 @@ defineExpose({
         <div>
           {{ article.content }}
         </div>
-        <div class="flex gap-3">
+        <div class="flex gap-3 items-center">
           <NewsEditComponent @refreshList="fetchData" :article="article"> <Button class="my-4">EDIT</Button></NewsEditComponent>
           <NewsAuthorAddComponent @refreshList="fetchData" :article="article"> <Button class="my-4">ADD NEW AUTHOR</Button></NewsAuthorAddComponent>
+          <Button @click="removeNews(article.id)" variant="destructive">Remove article</Button>
         </div>
         <div v-if="article.authors.length > 0" class="mt-5">
           <span class="text-2xl">Authors:</span>

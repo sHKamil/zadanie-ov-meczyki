@@ -7,6 +7,7 @@ import CardTitle from './ui/card/CardTitle.vue';
 import type { AuthorInRank } from '@/utils/types/AuthorInRankType';
 import { ref } from 'vue';
 import { GetBackendUrl } from '@/utils/GetBackendUrl';
+import { Skeleton } from './ui/skeleton';
 
 let position = 1;
 const rank = ref<AuthorInRank[] | null>(null);
@@ -36,16 +37,15 @@ defineExpose({
         <CardDescription>Top 3 writers in this week</CardDescription>
         </CardHeader>
         <CardContent v-if="!rank">
-          <hr>
-            <div class="w-full flex justify-between">
-              <div class="w-fit">
-                Loading...
-              </div>
+          <div class="flex items-center space-x-4 w-full">
+            <div class="space-y-6 w-full">
+              <Skeleton class="h-6 w-full" />
+              <Skeleton class="h-6 w-full" />
+              <Skeleton class="h-6 w-full" />
             </div>
-          <hr>
+          </div>
         </CardContent>
         <CardContent v-for="author in rank">
-          <hr>
             <div class="w-full flex justify-between">
               <div class="w-fit">
                 {{position++}}. {{ author.name }}

@@ -16,16 +16,13 @@ import { useToast } from './ui/toast';
 import { toTypedSchema } from '@vee-validate/zod';
 import * as z from 'zod'
 import { useForm } from 'vee-validate';
-import { useEditNews } from '@/composable/useEditNews';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
 import { useAddAuthorToNews } from '@/composable/useAddAuthorToNews';
 import { ref, watch } from 'vue';
 import { useAuthors } from '@/composable/useAuthors';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Check, ChevronsUpDown } from 'lucide-vue-next';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from './ui/command';
+import { Command, CommandGroup, CommandItem, CommandList } from './ui/command';
 
 const emit = defineEmits(['refreshList']);
 

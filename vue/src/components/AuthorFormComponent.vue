@@ -49,10 +49,16 @@ const onSubmit =  handleSubmit(async (values) => {
                 <FormMessage />
               </FormItem>
             </FormField>
-
-            <Button type="submit">
-              Submit
-            </Button>
+            <div class="flex gap-6">
+              <Button type="submit">
+                Submit
+              </Button>
+              <RouterLink to="/authors">
+                <Button variant="outline">
+                  Show all Authors
+                </Button>
+              </RouterLink>
+            </div>
           </form>
         </CardContent>
     </Card>
