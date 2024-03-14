@@ -62,7 +62,7 @@ class NewsController extends AbstractController
         }
     }
 
-    #[Route('/news/{id}', name: 'app_news_article_edit', methods:['POST'])]
+    #[Route('/news/edit/{id}', name: 'app_news_article_edit', methods:['POST'])]
     public function articleEdit(EntityManagerInterface $entityManager, Request $request, int $id): JsonResponse
     {
         $formValidator = new FormValidator;
@@ -75,16 +75,79 @@ class NewsController extends AbstractController
 
         $errors['title'] = $formValidator->nameField($data['title']);
         $errors['content'] = $formValidator->contentField($data['content']);
-        $errors['authors'] = $formValidator->authorsField($data['authors']);
 
-        if(count($errors['title']) <= 0 && count($errors['content']) <= 0 && count($errors['authors']) <= 0) {
+        if(count($errors['title']) <= 0 && count($errors['content']) <= 0) {
             $article->setTitle($data['title']);
             $article->setContent($data['content']);
-            foreach ($data['authors'] as $id) {
-                $author = $authorRepository->find($id);
-                if($author){
-                    $article->addAuthor($author);
+
+            if(isset($data['authors'])) {
+                $errors['authors'] = $formValidator->authorsField($data['authors']);
+                if(count($errors['authors']) <= 0)
+                foreach ($data['authors'] as $id) {
+                    $author = $authorRepository->find($id);
+                    if($author){
+                        $article->addAuthor($author);
+                    }
                 }
+            }
+
+            return $this->send($article, $entityManager);
+        } else {
+            return new JsonResponse([
+                'status' => '400',
+                'message' => $errors,
+            ], 400);
+        }
+    }
+
+    #[Route('/news/author/add', name: 'app_news_author_add', methods:['POST'])]
+    public function addAuthorToArticle(EntityManagerInterface $entityManager, Request $request): JsonResponse
+    {
+        $formValidator = new FormValidator;
+
+        $repository = $entityManager->getRepository(News::class);
+        $authorRepository = $entityManager->getRepository(Author::class);
+        
+        $data = json_decode($request->getContent(), true);
+
+        $errors['article_id'] = $formValidator->idField((int) $data['article_id']);
+        $errors['author_id'] = $formValidator->idField((int) $data['author_id']);
+
+        if(count($errors['article_id']) <= 0 && count($errors['author_id']) <= 0) {
+            $article = $repository->find((int) $data['article_id']);
+            $author = $authorRepository->find((int) $data['author_id']);
+
+            if($author){
+                $article->addAuthor($author);
+            }
+            return $this->send($article, $entityManager);
+        } else {
+            return new JsonResponse([
+                'status' => '400',
+                'message' => $errors,
+            ], 400);
+        }
+    }
+
+    #[Route('/news/author/delete', name: 'app_news_author_delete', methods:['POST'])]
+    public function deleteAuthorFromArticle(EntityManagerInterface $entityManager, Request $request): JsonResponse
+    {
+        $formValidator = new FormValidator;
+
+        $repository = $entityManager->getRepository(News::class);
+        $authorRepository = $entityManager->getRepository(Author::class);
+        
+        $data = json_decode($request->getContent(), true);
+
+        $errors['article_id'] = $formValidator->idField((int) $data['article_id']);
+        $errors['author_id'] = $formValidator->idField((int) $data['author_id']);
+
+        if(count($errors['article_id']) <= 0 && count($errors['author_id']) <= 0) {
+            $article = $repository->find((int) $data['article_id']);
+            $author = $authorRepository->find((int) $data['author_id']);
+
+            if($author){
+                $article->removeAuthor($author);
             }
             return $this->send($article, $entityManager);
         } else {

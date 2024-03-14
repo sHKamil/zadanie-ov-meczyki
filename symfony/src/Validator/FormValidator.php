@@ -54,4 +54,20 @@ class FormValidator
         
         return $errors;
     }
+
+    public function idField(int $id)
+    {
+        $validator = Validation::createValidator();
+        $array = ['id' => $id ];
+        $constraints = new Assert\Collection([
+            'id' => [new Assert\Type("integer")],
+        ]);
+        $violations = $validator->validate($array, $constraints);
+        $errors = [];
+        foreach ($violations as $violation) {
+            $errors[] = $violation->getMessage();
+        }
+        
+        return $errors;
+    }
 }
