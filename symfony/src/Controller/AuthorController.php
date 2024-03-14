@@ -21,11 +21,20 @@ class AuthorController extends AbstractController
         return $this->json($authors);
     }
 
-    #[Route('/author/{id}', name: 'app_author', methods: ['GET'])]
+    #[Route('/author/{id}', name: 'app_author_data', methods: ['GET'])]
     public function author(EntityManagerInterface $entityManager, int $id): JsonResponse
     {
         $repository = $entityManager->getRepository(Author::class);
         $author = $repository->findByIdWithNews($id);
+
+        return $this->json($author);
+    }
+
+    #[Route('/author/articles/{id}', name: 'app_author_article', methods: ['GET'])]
+    public function authorArticle(EntityManagerInterface $entityManager, int $id): JsonResponse
+    {
+        $repository = $entityManager->getRepository(Author::class);
+        $author = $repository->findByIdOnlyNews($id);
 
         return $this->json($author);
     }

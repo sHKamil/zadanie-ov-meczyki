@@ -49,23 +49,26 @@ class NewsRepository extends ServiceEntityRepository
 
     public function findByIdWithAuthors(int $id): array
     {
-        $news = $this->findOneBy(['id' => $id]);
-        $authorsCollection = $news->getAuthors();
+        $news = $this->find($id);
+        if($news) {
+            $authorsCollection = $news->getAuthors();
 
-        $authorsArray = [];
-        foreach ($authorsCollection as $author) {
-        $authorsArray[] = [
-                'id' => $author->getId(),
-                'name' => $author->getName()
+            $authorsArray = [];
+            foreach ($authorsCollection as $author) {
+            $authorsArray[] = [
+                    'id' => $author->getId(),
+                    'name' => $author->getName()
+                ];
+            }
+            
+            return [
+                'id' => $news->getId(),
+                'title' => $news->getTitle(),
+                'content' => $news->getContent(),
+                'create_date' => $news->getCreateDate(),
+                'authors' => $authorsArray
             ];
         }
-        
-        return [
-            'id' => $news->getId(),
-            'title' => $news->getTitle(),
-            'content' => $news->getContent(),
-            'create_date' => $news->getCreateDate(),
-            'authors' => $authorsArray
-        ];
+        return [];
     }
 }

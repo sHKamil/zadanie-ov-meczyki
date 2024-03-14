@@ -51,26 +51,51 @@ class AuthorRepository extends ServiceEntityRepository
 
     public function findByIdWithNews(int $id): array
     {
-        $author = $this->findOneBy(['id' => $id]);
-        $newsCollection = $author->getNews();
+        $author = $this->find($id);
+        if($author) {
+            $newsCollection = $author->getNews();
 
-        $newsArray = [];
-        foreach ($newsCollection as $news) {
-        $newsArray[] = [
-                'id' => $news->getId(),
-                'title' => $news->getTitle(),
-                'content' => $news->getContent(),
-                'create_date' => $news->getCreateDate()
+            $newsArray = [];
+            foreach ($newsCollection as $news) {
+            $newsArray[] = [
+                    'id' => $news->getId(),
+                    'title' => $news->getTitle(),
+                    'content' => $news->getContent(),
+                    'create_date' => $news->getCreateDate()
+                ];
+            }
+            
+            return [
+                'id' => $author->getId(),
+                'name' => $author->getName(),
+                'articles' => $newsArray
             ];
         }
-        
-        return [
-            'id' => $author->getId(),
-            'name' => $author->getName(),
-            'articles' => $newsArray
-        ];
+        return [];
     }
 
+    public function findByIdOnlyNews(int $id): array
+    {
+        $author = $this->find($id);
+        if($author) {
+            $newsCollection = $author->getNews();
+
+            $newsArray = [];
+            foreach ($newsCollection as $news) {
+            $newsArray[] = [
+                    'id' => $news->getId(),
+                    'title' => $news->getTitle(),
+                    'content' => $news->getContent(),
+                    'create_date' => $news->getCreateDate()
+                ];
+            }
+            
+            return [
+                'articles' => $newsArray
+            ];
+        }
+        return [];
+    }
 
     public function findTopAuthorsOfTheWeek(int $top, EntityManagerInterface $entityManager)
     {

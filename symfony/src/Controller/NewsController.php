@@ -26,7 +26,7 @@ class NewsController extends AbstractController
     public function article(EntityManagerInterface $entityManager, int $id): JsonResponse
     {
         $repository = $entityManager->getRepository(News::class);
-        $article = $repository->findByIdWithAuthors(['id' => $id]);
+        $article = $repository->findByIdWithAuthors($id);
 
         return $this->json($article);
     }

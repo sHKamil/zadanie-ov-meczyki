@@ -27,3 +27,38 @@ into database.
 1. Clone repository
 2. Go to the main directory of downloaded repository ``` cd path/to/repository ```
 3. ``` docker compose up -d --build ```
+
+### Backend by default will be available on port 8070, so: http://localhost:8070/
+
+### Frontend by default will be available on port 8080, so: http://localhost:8080/
+
+# About
+### Backend - Symfony
+
+#### Entities: 
+- News(Many to Many)
+- Authors(Many to Many)
+
+#### Endpoints
+| Endpoint | Result  | Method |
+| :------------ |:---------------:|:---------------:|
+| /news/{id}     | Get article by some id | GET |
+| /author/articles/{id}     | Get all articles for given author | GET |
+| /author/top/3 | Get top 3 authors that wrote the most articles last week.| GET |
+| /authors | Get authors.| GET |
+| /author/{id} | Get author with given id.| GET |
+| /author/edit/{id} | Edit author with given id.| POST |
+| /author/add | Add new author.| POST |
+| /author/delete | Remove author.| POST |
+| /news | Get all news.| POST |
+| /news/add | Create news.| POST |
+| /news/edit/{id} | Edit article with given id. | POST |
+| /news/author/add | Add new author to existing article. | POST |
+| /news/author/delete | Delete author from article. | POST |
+| /news/delete | Delete article | POST |
+
+### Frontend - Vue.js
+
+# Symfony bundles/packages used
+- MakerBundle
+- OrmPack
