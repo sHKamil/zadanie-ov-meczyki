@@ -37,7 +37,7 @@ class NewsRepository extends ServiceEntityRepository
             }
             $newsWithAuthors[] = [
                 'id' => $article->getId(),
-                'name' => $article->getTitle(),
+                'title' => $article->getTitle(),
                 'content' => $article->getContent(),
                 'create_date' => $article->getCreateDate(),
                 'authors' => $authorsArray
